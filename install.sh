@@ -80,7 +80,9 @@ while true; do
 
     # Start the browser (See http://peter.sh/experiments/chromium-command-line-switches/)
     _IP=$(hostname -I) || true
-    chromium  --app='https://govlab.github.io/raspberry/$_IP'
+    chromium  --app='https://govlab.github.io/berrycast/$_IP'
 
 done;
 ' > /boot/xinitrc
+
+sudo reboot
