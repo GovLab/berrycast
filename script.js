@@ -1,9 +1,8 @@
 var urls = ["http://thegovlab.org",
-            "http://nytimes.com",
-            "http://news.ycombinator.com",
-            "http://discourse.thegovlab.org"];
+            "http://nytimes.com"
+];
 
-var timer = 4000;
+var timer = 10000;
 var i = 0;
 
 var interval = setInterval(function () {
