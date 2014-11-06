@@ -3,8 +3,10 @@ var urls = ["http://thegovlab.org",
 ];
 
 var timer = 30000;
-var i = 0;
+var i = 1;
 
+var iframe = document.getElementById('iframe');
+iframe.src = urls[0];
 var interval = setInterval(function () {
   var iframe = document.getElementById('iframe');
   iframe.src = urls[i];
