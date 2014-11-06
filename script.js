@@ -1,8 +1,8 @@
 var urls = ["http://thegovlab.org",
-            "http://nytimes.com"
+            "http://mobile.nytimes.com"
 ];
 
-var timer = 10000;
+var timer = 30000;
 var i = 0;
 
 var interval = setInterval(function () {
