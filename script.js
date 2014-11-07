@@ -1,8 +1,10 @@
 var urls = ["http://thegovlab.org",
-            "http://mobile.nytimes.com"
+            "http://mobile.nytimes.com",
+            "http://techcrunch.com/government-2/",
+            "http://www.whitehouse.gov/"
 ];
 
-var timer = 30000;
+var timer = 15000;
 var i = 1;
 
 var iframe = document.getElementById('iframe');
