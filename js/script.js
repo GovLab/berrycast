@@ -1,53 +1,67 @@
-/*jshint browser: true*/
+/*jshint browser: true */
 /*globals $*/
 $(document).ready(function () {
   "use strict";
 
   var iframes = [],
+      countdownInterval = 500,
       i = -1,
-      delay = 100,
-      $body = $('body');
+      defaultDelay = 15,
+      $body = $('body'),
+      $countdown = $('#countdown'),
+      $slide = $('#slide');
+
+  function createIframe(url) {
+     return $('<iframe />').attr({
+          frameBorder: '0',
+          src: url
+        }).css({
+          zIndex: 2
+        })/*.load(function () {
+          window.console.log('loaded');
+        })*/.appendTo($body);
+  }
 
   function updateIframe() {
     $.getJSON('data/urls.json').done(function(urls) {
+      var url,
+          delay;
+
       if (iframes[i]) {
-        iframes[i].css({
-          zIndex: 0
-        });
+        iframes[i].css('zIndex', 0);
       }
       i = i > urls.length - 2 ? 0 : i + 1;
-      if (iframes[i]) {
-        iframes[i].css({
-          zIndex: 2
-        });
+
+      if ($.isArray(urls[i])) {
+        url = urls[i][0];
+        delay = urls[i][1];
       } else {
-        iframes[i] = $('<iframe />').attr({
-          frameBorder: '0',
-          src: urls[i]
-        }).css({
-          zIndex: 2
-        }).load(function () {
-          window.console.log('loaded');
-        }).appendTo($body);
+        url = urls[i];
+        delay = defaultDelay;
       }
+      if (iframes[i]) {
+        iframes[i].css('zIndex', 2);
+      } else {
+        iframes[i] = createIframe(url);
+      }
+
+      delay *= 1000;
+
+      $countdown.text(delay);
+      $slide.text(i);
+
+      var countdown = setInterval(function () {
+        $countdown.text(Number($countdown.text()) - countdownInterval);
+      }, countdownInterval);
+
+      setTimeout(function () {
+        clearInterval(countdown);
+        updateIframe();
+      }, delay);
+    }).fail(function () {
+      setTimeout(updateIframe, defaultDelay * 1000);
     });
   }
 
   updateIframe();
-
-  setInterval(updateIframe, delay);
-
-  /*
-  var timer = 30000;
-  var i = 1;
-  iframe.src = urls[0];
-  var interval = setInterval(function () {
-    var iframe = document.getElementById('iframe');
-    iframe.src = urls[i];
-    i += 1;
-    if (i > urls.length - 1) {
-      i = 0;
-    }
-  }, timer);
- */
 });

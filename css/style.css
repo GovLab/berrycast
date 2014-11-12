@@ -5,3 +5,13 @@ iframe {
   width: 100%;
   height: 100%;
 }
+
+#debug {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  color: #aaa;
+  width: 100%;
+  z-index: 100;
+  font-size: 9px;
+}

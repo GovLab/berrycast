@@ -1,5 +1,5 @@
-[ "http://thegovlab.org",
-  "http://www.nytimes.com",
-  "http://www.whitehouse.gov",
-  "http://techcrunch.com/government-2/"
+[ ["http://thegovlab.org", 15],
+  ["http://www.nytimes.com", 15],
+  ["http://www.whitehouse.gov", 10],
+  ["http://techcrunch.com/government-2/", 20]
 ]
