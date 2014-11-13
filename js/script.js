@@ -3,9 +3,8 @@
 $(document).ready(function () {
   "use strict";
 
-  var iframes = [],
-      countdownInterval = 500,
-      i = -1,
+  var countdownInterval = 500,
+      i = 0,
       defaultDelay = 15,
       $body = $('body'),
       $countdown = $('#countdown'),
@@ -15,7 +14,7 @@ $(document).ready(function () {
      return $('<iframe />').attr({
           frameBorder: '0',
           src: url
-        }).css({
+        }).addClass('webpage').css({
           zIndex: 2
         })/*.load(function () {
           window.console.log('loaded');
@@ -23,14 +22,15 @@ $(document).ready(function () {
   }
 
   function updateIframe() {
-    $.getJSON('data/urls.json').done(function(urls) {
+    $.getJSON('data/urls.json?_=' + (new Date()).getTime()).done(function(urls) {
       var url,
-          delay;
+          delay,
+          $iframe;
 
-      if (iframes[i]) {
-        iframes[i].css('zIndex', 0);
-      }
-      i = i > urls.length - 2 ? 0 : i + 1;
+      $('.webpage').each(function (idx, el) {
+        $(el).css('zIndex', 0);
+      });
+      i = i >= urls.length - 1 ? 0 : i + 1;
 
       if ($.isArray(urls[i])) {
         url = urls[i][0];
@@ -39,10 +39,12 @@ $(document).ready(function () {
         url = urls[i];
         delay = defaultDelay;
       }
-      if (iframes[i]) {
-        iframes[i].css('zIndex', 2);
+
+      $iframe = $('iframe[src="' + url + '"]');
+      if ($iframe.length > 0) {
+        $iframe.css('zIndex', 2);
       } else {
-        iframes[i] = createIframe(url);
+        $iframe = createIframe(url);
       }
 
       delay *= 1000;

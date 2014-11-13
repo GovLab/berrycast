@@ -15,3 +15,7 @@ iframe {
   z-index: 100;
   font-size: 9px;
 }
+
+#status {
+  color: red;
+}
