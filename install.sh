@@ -63,7 +63,8 @@ while true; do
 
     # Generate the bare minimum to keep Chromium happy!
     mkdir -p /home/pi/.config/chromium/Default
-    sqlite3 /home/pi/.config/chromium/Default/Web\ Data "CREATE TABLE meta(key LONGVARCHAR NOT NULL UNIQUE PRIMARY KEY, value LONGVARCHAR); INSERT INTO meta VALUES('version','46'); CREATE TABLE keywords (foo INTEGER);";
+    chmod -R 777 /home/pi/.config/
+    #sqlite3 /home/pi/.config/chromium/Default/Web\ Data "CREATE TABLE meta(key LONGVARCHAR NOT NULL UNIQUE PRIMARY KEY, value LONGVARCHAR); INSERT INTO meta VALUES('version','46'); CREATE TABLE keywords (foo INTEGER);";
 
     # Disable DPMS / Screen blanking
     xset -dpms
@@ -80,7 +81,7 @@ while true; do
 
     # Start the browser (See http://peter.sh/experiments/chromium-command-line-switches/)
     _IP=$(hostname -I) || true
-    chromium --disable-web-security --disable-sync --low-end-device-mode --incognito --disable-infobars --app=https://govlab.github.io/berrycast/$_IP
+    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-web-security --disable-sync --lo w-end-device-mode --incognito --disable-infobars --app=https://govlab.github.io/berrycast/$_IP
 
 done;
 ' > /boot/xinitrc
