@@ -6,7 +6,7 @@
 
 sudo apt-get update
 sudo apt-get dist-upgrade
-sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3
+sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
 
 echo '
 # 1900x1200 at 32bit depth, DMT mode
@@ -81,7 +81,7 @@ while true; do
 
     # Start the browser (See http://peter.sh/experiments/chromium-command-line-switches/)
     _IP=$(hostname -I) || true
-    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --incognito --disable-infobars --app=https://govlab.github.io/berrycast/$_IP
+    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --incognito --disable-infobars --proxy-server="127.0.0.1:8123;https=127.0.0.1:8123;socks=127.0.0.1:8123;sock4=127.0.0.1:8123;sock5=127.0.0.1:8123,ftp=127.0.0.1:8123" --app=https://govlab.github.io/berrycast/$_IP
 
 done;
 ' > /boot/xinitrc
@@ -91,5 +91,10 @@ echo '
 # http://raspberrypi.stackexchange.com/questions/1384/how-do-i-disable-suspend-mode/4518#4518
 options 8192cu rtw_power_mgnt=0
 ' > /etc/modprobe.d/8192cu.conf
+
+echo '
+# Censor X-Frame-Options to allow embedding of any website
+censoredHeaders = X-Frame-Options
+'
 
 sudo reboot
