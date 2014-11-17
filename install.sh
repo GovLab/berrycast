@@ -94,7 +94,8 @@ options 8192cu rtw_power_mgnt=0
 
 echo '
 # Censor X-Frame-Options to allow embedding of any website
-censoredHeaders = X-Frame-Options
-' >> /etc/polipo/config
+censoredHeaders = X-Frame-Options, Strict-Transport-Security
+' > /home/pi/.polipo
+chown pi /home/pi/.polipo
 
 sudo reboot
