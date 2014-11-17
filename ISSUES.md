@@ -18,5 +18,6 @@
 
     git ls-remote git@github.com:ORG/PROJECT.git HEAD
 
+* Use google sheets [resolved]
 * Login via cookie
 * Login via automation (selenium)
