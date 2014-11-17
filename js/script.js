@@ -4,11 +4,13 @@ $(document).ready(function () {
   "use strict";
 
   var countdownInterval = 500,
+      googleKey = '1t-ESBjG3a9_GcbESfs02S_5od45JSN5SBApW86T-TT4',
       i = 0,
       defaultDelay = 15,
       $body = $('body'),
       $countdown = $('#countdown'),
-      $slide = $('#slide');
+      $slide = $('#slide'),
+      $status = $('#status');
 
   function createIframe(url) {
      return $('<iframe />').attr({
@@ -22,21 +24,24 @@ $(document).ready(function () {
   }
 
   function updateIframe() {
-    $.getJSON('data/urls.json?_=' + (new Date()).getTime()).done(function(urls) {
-      var url,
+    $status.text('Loading spreadsheet');
+    $.getJSON('https://spreadsheets.google.com/feeds/list/' + googleKey +
+              '/od6/public/values?alt=json-in-script&callback=?').done(function (resp) {
+      var data = resp.feed.entry,
+          url,
           delay,
           $iframe;
 
       $('.webpage').each(function (idx, el) {
         $(el).css('zIndex', 0);
       });
-      i = i >= urls.length - 1 ? 0 : i + 1;
+      i = i >= data.length - 1 ? 0 : i + 1;
 
-      if ($.isArray(urls[i])) {
-        url = urls[i][0];
-        delay = urls[i][1];
-      } else {
-        url = urls[i];
+      url = data[i].gsx$url.$t;
+      delay = data[i].gsx$time.$t;
+
+      delay = Number(delay);
+      if (isNaN(delay)) {
         delay = defaultDelay;
       }
 
@@ -51,6 +56,7 @@ $(document).ready(function () {
 
       $countdown.text(delay);
       $slide.text(i);
+      $status.text(url);
 
       var countdown = setInterval(function () {
         $countdown.text(Number($countdown.text()) - countdownInterval);
