@@ -7,5 +7,16 @@
   web-security]
 * Full-sizing the Chromium window [resolved: using the script]
 
+* Doesn't automatically update the Pis when something in this repo changes --
+  could be fixed with 
+
+    Found the answer here thanks to @jszakmeister:
+
+    git ls-remote $URL HEAD
+
+    For my private repo, I had to use the following syntax instead of the URL:
+
+    git ls-remote git@github.com:ORG/PROJECT.git HEAD
+
 * Login via cookie
 * Login via automation (selenium)

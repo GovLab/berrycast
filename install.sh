@@ -81,7 +81,7 @@ while true; do
 
     # Start the browser (See http://peter.sh/experiments/chromium-command-line-switches/)
     _IP=$(hostname -I) || true
-    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --incognito --disable-infobars --proxy-server="127.0.0.1:8123;https=127.0.0.1:8123;socks=127.0.0.1:8123;sock4=127.0.0.1:8123;sock5=127.0.0.1:8123,ftp=127.0.0.1:8123" --app=https://govlab.github.io/berrycast/$_IP
+    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --incognito --disable-infobars --proxy-server="127.0.0.1:8123;https=127.0.0.1:8123;socks=127.0.0.1:8123;sock4=127.0.0.1:8123;sock5=127.0.0.1:8123,ftp=127.0.0.1:8123" --app=http://govlab.github.io/berrycast/$_IP
 
 done;
 ' > /boot/xinitrc
@@ -95,6 +95,6 @@ options 8192cu rtw_power_mgnt=0
 echo '
 # Censor X-Frame-Options to allow embedding of any website
 censoredHeaders = X-Frame-Options
-'
+' >> /etc/polipo/config
 
 sudo reboot
