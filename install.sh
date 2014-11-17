@@ -81,7 +81,7 @@ while true; do
 
     # Start the browser (See http://peter.sh/experiments/chromium-command-line-switches/)
     _IP=$(hostname -I) || true
-    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-web-security --disable-sync --lo w-end-device-mode --incognito --disable-infobars --app=https://govlab.github.io/berrycast/$_IP
+    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --incognito --disable-infobars --app=https://govlab.github.io/berrycast/$_IP
 
 done;
 ' > /boot/xinitrc
