@@ -86,4 +86,10 @@ while true; do
 done;
 ' > /boot/xinitrc
 
+echo '
+# Disable power management (assumes Realtek 8192cu chip)
+# http://raspberrypi.stackexchange.com/questions/1384/how-do-i-disable-suspend-mode/4518#4518
+options 8192cu rtw_power_mgnt=0
+' > /etc/modprobe.d/8192cu.conf
+
 sudo reboot
