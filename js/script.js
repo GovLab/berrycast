@@ -27,36 +27,54 @@ $(document).ready(function () {
     $status.text('Loading spreadsheet');
     $.getJSON('https://spreadsheets.google.com/feeds/list/' + googleKey +
               '/od6/public/values?alt=json-in-script&callback=?').done(function (resp) {
-      var data = resp.feed.entry,
-          url,
-          delay,
-          $iframe;
+      var delay = defaultDelay * 1000;
+      try {
+        var data = resp.feed.entry,
+            url,
+            $iframe;
 
-      $('.webpage').each(function (idx, el) {
-        $(el).css('zIndex', 0);
-      });
-      i = i >= data.length - 1 ? 0 : i + 1;
+        $('.webpage').each(function (idx, el) {
+          $(el).css('zIndex', 0);
+        });
+        i = i >= data.length - 1 ? 0 : i + 1;
 
-      url = data[i].gsx$url.$t;
-      delay = data[i].gsx$time.$t;
+        url = data[i].gsx$url.$t;
+        delay = data[i].gsx$time.$t;
 
-      delay = Number(delay);
-      if (isNaN(delay)) {
-        delay = defaultDelay;
+        delay = Number(delay);
+        if (isNaN(delay)) {
+          delay = defaultDelay;
+        }
+
+        $iframe = $('iframe[src="' + url + '"]');
+        if ($iframe.length > 0) {
+          $iframe.css('zIndex', 2);
+        } else {
+          $iframe = createIframe(url);
+        }
+
+        delay *= 1000;
+
+        $countdown.text(delay);
+        $slide.text(i);
+        $status.text(url);
+      } catch (exc) {
+        $status.text(exc);
+      } finally {
+
+        var countdown = setInterval(function () {
+          $countdown.text(Number($countdown.text()) - countdownInterval);
+        }, countdownInterval);
+
+        setTimeout(function () {
+          clearInterval(countdown);
+          updateIframe();
+        }, delay);
       }
-
-      $iframe = $('iframe[src="' + url + '"]');
-      if ($iframe.length > 0) {
-        $iframe.css('zIndex', 2);
-      } else {
-        $iframe = createIframe(url);
-      }
-
-      delay *= 1000;
-
+    }).fail(function () {
+      var delay = defaultDelay * 1000;
       $countdown.text(delay);
-      $slide.text(i);
-      $status.text(url);
+      $countdown.text('failed');
 
       var countdown = setInterval(function () {
         $countdown.text(Number($countdown.text()) - countdownInterval);
@@ -66,8 +84,6 @@ $(document).ready(function () {
         clearInterval(countdown);
         updateIframe();
       }, delay);
-    }).fail(function () {
-      setTimeout(updateIframe, defaultDelay * 1000);
     });
   }
 
