@@ -117,7 +117,7 @@ echo '
 ' > /home/pi/.berrycron
 crontab /home/pi/.berrycron
 
-#sudo apt-get update
+sudo apt-get update
 sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
 
 sudo reboot
