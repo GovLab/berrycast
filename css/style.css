@@ -15,3 +15,15 @@ iframe {
   z-index: 100;
   font-size: 9px;
 }
+
+.active {
+  z-index: 2;
+}
+
+.blank {
+  z-index: 1;
+}
+
+.inactive {
+  z-index: 0;
+}

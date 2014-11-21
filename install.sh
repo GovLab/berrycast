@@ -61,10 +61,22 @@ while true; do
     rm -rf /home/pi/.config;
     rm -rf /home/pi/.pki;
 
-    # Generate the bare minimum to keep Chromium happy!
+    # Add our login cookies
     mkdir -p /home/pi/.config/chromium/Default
     chmod -R 777 /home/pi/.config/
     #sqlite3 /home/pi/.config/chromium/Default/Web\ Data "CREATE TABLE meta(key LONGVARCHAR NOT NULL UNIQUE PRIMARY KEY, value LONGVARCHAR); INSERT INTO meta VALUES('version','46'); CREATE TABLE keywords (foo INTEGER);";
+
+    rm -rf /home/pi/.config/chromium/Default/Cookies
+    sqlite3 /home/pi/.config/chromium/Default/Cookies "PRAGMA foreign_keys=OFF;
+    BEGIN TRANSACTION;
+    CREATE TABLE meta(key LONGVARCHAR NOT NULL UNIQUE PRIMARY KEY, value LONGVARCHAR);
+    INSERT INTO \"meta\" VALUES('version','5');
+    INSERT INTO \"meta\" VALUES('last_compatible_version','5');
+    CREATE TABLE cookies (creation_utc INTEGER NOT NULL UNIQUE PRIMARY KEY,host_key TEXT NOT NULL,name TEXT NOT NULL,value TEXT NOT NULL,path TEXT NOT NULL,expires_utc INTEGER NOT NULL,secure INTEGER NOT NULL,httponly INTEGER NOT NULL,last_access_utc INTEGER NOT NULL, has_expires INTEGER NOT NULL DEFAULT 1, persistent INTEGER NOT NULL DEFAULT 1);
+    INSERT INTO \"cookies\" VALUES(13061063029272912,'discourse.thegovlab.org','_t','962a5ae730cfdac0f79a6082a7ab0f0a','/',13692215029000000,0,1,13061068938651930,1,1);
+    INSERT INTO \"cookies\" VALUES(13061063029272913,'discourse.thegovlab.org','_forum_session','BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJWNjNWIwZDc0NTE4ODRkMjc1NTAxNGEyM2I5M2ZlNDU1BjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMW1CQTZZS2lDMXlzd0R4azdiL3dUQ3lmbGlxZzZ4RFJ0a2YrVTVUWW9nWUU9BjsARg','/',13692215029000000,0,1,13061068938651930,1,1);
+    CREATE INDEX domain ON cookies(host_key);
+    COMMIT;"
 
     # Disable DPMS / Screen blanking
     xset -dpms
@@ -81,7 +93,7 @@ while true; do
 
     # Start the browser (See http://peter.sh/experiments/chromium-command-line-switches/)
     _IP=$(hostname -I) || true
-    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --incognito --disable-infobars --proxy-server="127.0.0.1:8123;https=127.0.0.1:8123;socks=127.0.0.1:8123;sock4=127.0.0.1:8123;sock5=127.0.0.1:8123,ftp=127.0.0.1:8123" --app=http://govlab.github.io/berrycast/$_IP
+    chromium --kiosk --disable-session-storage --disable-plugins --disable-plugins-discovery --disable-sync --low-end-device-mode --disable-infobars --proxy-server="127.0.0.1:8123;https=127.0.0.1:8123;socks=127.0.0.1:8123;sock4=127.0.0.1:8123;sock5=127.0.0.1:8123,ftp=127.0.0.1:8123" --app=http://govlab.github.io/berrycast/$_IP
 
 done;
 ' > /boot/xinitrc

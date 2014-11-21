@@ -16,11 +16,7 @@ $(document).ready(function () {
      return $('<iframe />').attr({
           frameBorder: '0',
           src: url
-        }).addClass('webpage').css({
-          zIndex: 2
-        })/*.load(function () {
-          window.console.log('loaded');
-        })*/.appendTo($body);
+        }).addClass('webpage').appendTo($body);
   }
 
   function updateIframe() {
@@ -31,11 +27,19 @@ $(document).ready(function () {
       try {
         var data = resp.feed.entry,
             url,
-            $iframe;
+            $iframe,
+            lastUrl,
+            $lastIframe;
 
-        $('.webpage').each(function (idx, el) {
-          $(el).css('zIndex', 0);
-        });
+        $lastIframe = $('.active');
+        if ($lastIframe.length > 0) {
+          // force reload
+          lastUrl = $lastIframe.attr('src');
+          $lastIframe.attr('src', 'blank.html');
+          $lastIframe.attr('src', lastUrl);
+        }
+
+        $('.webpage').addClass('inactive').removeClass('active');
         i = i >= data.length - 1 ? 0 : i + 1;
 
         url = data[i].gsx$url.$t;
@@ -47,11 +51,10 @@ $(document).ready(function () {
         }
 
         $iframe = $('iframe[src="' + url + '"]');
-        if ($iframe.length > 0) {
-          $iframe.css('zIndex', 2);
-        } else {
+        if ($iframe.length === 0) {
           $iframe = createIframe(url);
         }
+        $iframe.addClass('active').removeClass('inactive');
 
         delay *= 1000;
 

@@ -21,3 +21,4 @@
 * Use google sheets [resolved]
 * Login via cookie
 * Login via automation (selenium)
+* Reload pages in background to keep them up to date
