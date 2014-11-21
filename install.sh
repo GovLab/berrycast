@@ -112,7 +112,8 @@ chown pi /home/pi/.polipo
 echo '
 0 9 * * * tvservice --preferred > /dev/null; pkill -HUP chromium
 0 18 * * * tvservice -o > /dev/null
-' | crontab
+' > /home/pi/.berrycron
+crontab /home/pi/.berrycron
 
 sudo apt-get update
 sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
