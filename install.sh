@@ -19,9 +19,9 @@ echo '#!/bin/sh -e
 
 # Wait for the TV-screen to be turned on...
 while ! $( tvservice --dumpedid /tmp/edid | fgrep -qv '"'"'Nothing written!'"'"' ); do
-    bHadToWaitForScreen=true
+    bHadToWaitForScreen=true;
     printf "===> Screen is not connected, off or in an unknown mode, waiting for it to become available...\n"
-    sleep 10
+    sleep 10;
 done;
 
 printf "===> Screen is on, extracting preferred mode...\n"
