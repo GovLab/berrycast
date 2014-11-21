@@ -19,6 +19,11 @@
     git ls-remote git@github.com:ORG/PROJECT.git HEAD
 
 * Use google sheets [resolved]
-* Login via cookie
-* Login via automation (selenium)
-* Reload pages in background to keep them up to date
+* Login via cookie [resolved]
+* Login via automation (selenium) [cannot be resolved, no ARM build of
+  Selenium]
+* Reload pages in background to keep them up to date [resolved]
+* Power-save: turn screen off and back on [resolved]
+  - turn off: `tvservice -o`
+  - turn back on: `tvservice --preferred > /dev/null; pkill -HUP chromium`
+    (startx auto-revives chromium)
