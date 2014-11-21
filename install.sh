@@ -39,7 +39,7 @@ if [ -f /boot/xinitrc ]; then
 fi
 
 exit 0
-' >> /etc/rc.local
+' > /etc/rc.local
 
 echo '
 #!/bin/sh
