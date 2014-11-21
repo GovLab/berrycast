@@ -5,7 +5,6 @@
 # https://govlab.github.io/raspberry/$IP_ADDRESS_OF_MACHINE/
 
 sudo apt-get update
-sudo apt-get -y dist-upgrade
 sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
 
 echo '
