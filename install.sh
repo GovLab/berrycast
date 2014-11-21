@@ -15,8 +15,7 @@ hdmi_pixel_encoding=1
 hdmi_group=2
 ' >> /boot/config.txt
 
-echo '
-#!/bin/sh -e
+echo '#!/bin/sh -e
 
 # Wait for the TV-screen to be turned on...
 while ! $( tvservice --dumpedid /tmp/edid | fgrep -qv 'Nothing written!' ); do
@@ -43,8 +42,7 @@ fi
 exit 0
 ' > /etc/rc.local
 
-echo '
-#!/bin/sh
+echo '#!/bin/sh
 while true; do
 
     # Clean up previously running apps, gracefully at first then harshly
