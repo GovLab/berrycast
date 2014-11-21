@@ -16,6 +16,8 @@ hdmi_group=2
 ' >> /boot/config.txt
 
 echo '
+#!/bin/sh -e
+
 # Wait for the TV-screen to be turned on...
 while ! $( tvservice --dumpedid /tmp/edid | fgrep -qv 'Nothing written!' ); do
     bHadToWaitForScreen=true; printf "===> Screen is not connected, off or in an unknown mode, waiting for it to become available...\n" sleep 10;
