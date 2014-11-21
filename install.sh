@@ -4,9 +4,6 @@
 # The result should be a raspberry pi that automatically loads content from
 # https://govlab.github.io/raspberry/$IP_ADDRESS_OF_MACHINE/
 
-sudo apt-get update
-sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
-
 echo '
 # 1900x1200 at 32bit depth, DMT mode
 disable_overscan=1
@@ -116,5 +113,8 @@ echo '
 0 9 * * * tvservice --preferred > /dev/null; pkill -HUP chromium
 0 18 * * * tvservice -o > /dev/null
 ' | crontab
+
+sudo apt-get update
+sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
 
 sudo reboot
