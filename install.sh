@@ -110,9 +110,10 @@ censoredHeaders = X-Frame-Options, Strict-Transport-Security
 chown pi /home/pi/.polipo
 
 # Install crontab
-# turns the screen on at 9AM and off at 6PM, restarts chromium upon screen on
+# turns the screen off at 6PM, and reboots machine to turn it back on in the
+# morning
 echo '
-0 9 * * * tvservice --preferred > /dev/null; pkill -HUP chromium
+0 9 * * * reboot
 0 18 * * * tvservice -o > /dev/null
 ' > /home/pi/.berrycron
 crontab /home/pi/.berrycron
