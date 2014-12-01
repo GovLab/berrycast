@@ -113,11 +113,23 @@ chown pi /home/pi/.polipo
 # turns the screen off at 6PM, and reboots machine to turn it back on in the
 # morning
 echo '
+* * * * * ~/.berryinstall.sh
 0 8 * * * apt-get update
 0 9 * * * reboot
 0 18 * * * tvservice -o > /dev/null
-' > /home/pi/.berrycron
-crontab /home/pi/.berrycron
+' > ~/.berrycron
+crontab ~/.berrycron
+
+git ls-remote https://github.com/govlab/berrycast HEAD | head -c 40 > ~/.berryhash
+
+echo '#!/bin/bash
+
+if [ $(cat ~/.berryhash) != $(git ls-remote https://github.com/govlab/berrycast HEAD | head -c 40) ]
+then
+  curl https://raw.githubusercontent.com/GovLab/berrycast/gh-pages/install.sh | sh
+fi
+' > ~/.berryinstall.sh
+chmod a+x ~/.berryinstall.sh
 
 sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
 
