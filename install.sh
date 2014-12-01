@@ -113,12 +113,12 @@ chown pi /home/pi/.polipo
 # turns the screen off at 6PM, and reboots machine to turn it back on in the
 # morning
 echo '
+0 8 * * * apt-get update
 0 9 * * * reboot
 0 18 * * * tvservice -o > /dev/null
 ' > /home/pi/.berrycron
 crontab /home/pi/.berrycron
 
-sudo apt-get update
 sudo apt-get -y install matchbox chromium x11-xserver-utils sqlite3 polipo
 
 sudo reboot
