@@ -115,7 +115,7 @@ chown pi /home/pi/.polipo
 echo '
 * * * * * ~/.berryinstall.sh
 0 8 * * * apt-get update
-0 9 * * * reboot
+0 9 * * * /sbin/reboot
 0 18 * * * tvservice -o > /dev/null
 ' > ~/.berrycron
 crontab ~/.berrycron
